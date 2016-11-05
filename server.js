@@ -17,15 +17,7 @@ io.on('connection', function(socket) {
 
     socket.on('update', function(delta) {
         console.log("Delta: " + JSON.stringify(delta));
-        console.log(delta);
-        var opNumber = 0;
-        for (var operation in delta) {
-            console.log("Operation");
-            console.log(operation[opNumber].retain);
-            opNumber++;
-        }
-
-        io.emit('push-update', delta);
+        socket.broadcast.emit('push-update', delta);
     });
 });
 
