@@ -1,0 +1,43 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>PeeDee - Collaborative Text Editor</title>
+    <meta name="description" content="PeeDee - A collaborative text editor demonstrating operational transformation">
+    <meta name="author" content="Jakob Pennington">
+
+    <!-- Custom Stylesheets -->
+    <link rel="stylesheet" href="css/styles.css?v=1.0">
+
+    <!-- Quill Stylesheets -->
+    <link href="https://cdn.quilljs.com/1.1.3/quill.snow.css" rel="stylesheet">
+    <link href="https://cdn.quilljs.com/1.1.3/quill.bubble.css" rel="stylesheet">
+
+    <!-- Include the Quill library -->
+    <script src="https://cdn.quilljs.com/1.1.3/quill.min.js"></script>
+
+    <!--[if lt IE 9]>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
+  <![endif]-->
+</head>
+
+<body>
+
+    <!-- Create the editor container -->
+    <div id="editor">
+        <p>Hello World!</p>
+        </br>
+        <p>Welcome to the <strong>PeeDee</strong> collaborative text editor</p>
+        <p>PeeDee allows you and your friends to collaboratively work on documents in real time, demonstrating Operational Transformation.</p>
+        <p>
+            </br>
+        </p>
+    </div>
+
+    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="js/scripts.js"></script>
+
+</body>

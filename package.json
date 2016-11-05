@@ -1,0 +1,17 @@
+{
+  "name": "pee-dee-server",
+  "version": "1.0.0",
+  "description": "A server to maintain consistency in a collaborative text editor PeeDee using Operational Transformation.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jakob Pennington",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.14.0",
+    "jquery": "^3.1.1",
+    "quill": "^1.1.3",
+    "socket.io": "^1.5.1"
+  }
+}
