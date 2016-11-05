@@ -9,7 +9,7 @@ app.use(express.static(__dirname + '/public'));
 
 io.on('connection', function(socket) {
     console.log('A new user connected');
-    socket.emit('connected', "Shia LaBeouf");
+    socket.emit('connected');
 
     socket.on('disconnect', function() {
         console.log('A user disconnected');
