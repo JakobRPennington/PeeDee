@@ -25,11 +25,6 @@ socket.on('connected', function() {
 });
 
 socket.on('push-update', function(delta) {
-    // Logging for testing
-    // console.log("Remote delta: " + JSON.stringify(delta.ops));
-    // console.log("Position: " + delta.ops[0].retain);
-    // console.log("Value: " + delta.ops[1].insert);
-
     // Handle incoming updates from the server
     editor.updateContents(delta, 'silent');
 });
