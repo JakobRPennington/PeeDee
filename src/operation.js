@@ -8,6 +8,7 @@ var OP_NAME_DELETE = "DELETE";
 var OP_NAME_UPDATE = "UPDATE";
 
 // Declare and initialise variables of the Operation "class"
+var operationId = "";
 var clientId = "";
 var type = OP_INSERT;
 var offset = 0;
@@ -30,6 +31,7 @@ module.exports = {
 
 /* Define the Operation "class" */
 var Operation = function(clientId, type, offset, length, text, key, value) {
+    this.operationId = '_' + Math.random().toString(36).substr(2, 9);
     this.clientId = clientId;
     this.type = type;
     this.opName = this.setName(type);
@@ -43,6 +45,14 @@ var Operation = function(clientId, type, offset, length, text, key, value) {
 /***********************************************
  * Operation "class" methods
  ***********************************************/
+Operation.prototype.getOperationId = function() {
+    return this.operationId;
+};
+
+Operation.prototype.setOperationId = function(operationId) {
+    this.operationId = operationId;
+};
+
 Operation.prototype.getClientId = function() {
     return this.clientId;
 };
