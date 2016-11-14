@@ -439,13 +439,11 @@ setInterval(function() {
     // Only process the incoming buffer if there are new operations
     if (getOperationIndex(outgoingBuffer, ILPO) >= 0) {
         if (getOperationIndex(outgoingBuffer, ILPO) < (outgoingBuffer.length - 1)) {
-            console.log("New item in outgoing buffer");
             sendOutgoingBuffer();
         }
     } else {
         // Handle the case for before the ILPO is set
         if (outgoingBuffer.length > 0 && ILPO === -1) {
-            console.log("First item in outgoing buffer");
             sendOutgoingBuffer();
         }
     }

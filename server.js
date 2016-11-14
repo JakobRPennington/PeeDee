@@ -3,17 +3,33 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var jQuery = require('jQuery');
+var unique = require('uniq');
+
+var operationManager = require('./src/operation');
+var OTManager = require('./src/ot');
+
 var PORT = process.env.port || 3000;
 
-var operationManager = require('./public/js/operation');
-var OTManager = require('./public/js/ot');
+// An array containing the incoming buffer arrays for each client
+var incomingBuffers = [];
+var outgoingBuffers = [];
+var ILTOArray = []; // Identifier of Last Tramsformed Operation
+
+// Map a clientId with the index of the respective incoming buffer 
+var clientMap = new Map();
+
+// Total number of clients who have connected to this session
+var clientCounter = 0;
+
+// A list of currently connected clients
+var clientList = [];
 
 /************************************
  * Listen for incoming connections
  ************************************/
 http.listen(PORT, function() {
     console.log('listening on port ' + PORT);
-    testOperation();
+    //testOperation();
 });
 
 /************************************
@@ -26,22 +42,37 @@ app.use(express.static(__dirname + '/public'));
  ************************************/
 io.on('connection', function(socket) {
     console.log('A new user connected');
+
     socket.emit('connected');
+    clientMap.set(socket.id, clientCounter);
+    clientList.push(socket.id);
+    incomingBuffers[clientCounter] = [];
+    outgoingBuffers[clientCounter] = [];
+
+    // For testing purposes only
+    printClientList();
 
     socket.on('disconnect', function() {
-        console.log('A user disconnected');
+        console.log('A user disconnected: ' + socket.id);
+        clientList.splice(clientList.indexOf(socket.id), 1);
+
+        // For testing purposes only
+        printClientList();
     });
 
-    socket.on('update', function(delta) {
-        console.log("Delta: " + JSON.stringify(delta));
-        socket.broadcast.emit('push-update', delta);
+    socket.on('update', function(operations, ILPO) {
+        var incomingBufferIndex = clientMap.get(socket.id);
+        console.log(ILPO);
+        for (var i = 0; i < operations.length; i++) {
+            console.log(operations[i]);
+            incomingBuffers[incomingBufferIndex].push(operations[i]);
+        }
     });
 });
 
 /************************************
  * Testing functions
  ************************************/
-
 /* Test the creation and update of an operation */
 function testOperation() {
     var testOperation1 = new operationManager.create(1, 1, 10, 4, "Shia", 1, 0);
@@ -64,4 +95,10 @@ function testOperation() {
 
     console.log("Test: SIT test")
     OTManager.doSIT(testOperation1, testOperation2);
+}
+
+function printClientList() {
+    for (var i = 0; i < clientList.length; i++) {
+        console.log("Index: " + i + ", ClientId: " + clientList[i]);
+    }
 }
